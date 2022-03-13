@@ -14472,7 +14472,7 @@ window.onload=function()
 	
 	if (!Game.ready)
 	{
-		if (top!=self) Game.ErrorFrame();
+		//if (top!=self) Game.ErrorFrame();
 		else
 		{
 			console.log('[=== '+choose([
