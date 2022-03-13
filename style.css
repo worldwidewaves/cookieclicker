@@ -381,7 +381,7 @@ oh forget it this is just a mess
 	left:0px;
 	top:0px;
 }
-/*
+
 #topBar
 {
 	position:absolute;
@@ -424,7 +424,7 @@ a.orangeLink:hover,#topBar a.orangeLink:hover
 	z-index:10000000;
 	float:none;
 }
-*/
+
 .hoverable
 {
 	text-align:left;
