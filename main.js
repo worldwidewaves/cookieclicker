@@ -14482,10 +14482,10 @@ window.onload=function()
 				'Remember : cheated cookies taste awful!',
 				'Hey, Orteil here. Cheated cookies taste awful... or do they?',
 			])+' ===]');
-			Game.Load();
 			
 			window.addEventListener('message', event => {
-		   	 // IMPORTANT: check the origin of the data! 
+		   	// IMPORTANT: check the origin of the data! 
+			console.log(event); 
 		 	   if (event.origin.startsWith('http://orteil.dashnet.org/cookieclicker/') || event.origin.startsWith('https://orteil.dashnet.org/cookieclicker/')) { 
 				// The data was sent from your site.
 				// Data sent with postMessage is stored in event.data:
@@ -14497,6 +14497,9 @@ window.onload=function()
 				return; 
 			    } 
 			}); 
+			Game.Load();
+			
+			
 			//try {Game.Load();}
 			//catch(err) {console.log('ERROR : '+err.message);}
 		}
