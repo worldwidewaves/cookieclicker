@@ -14483,136 +14483,20 @@ window.onload=function()
 				'Hey, Orteil here. Cheated cookies taste awful... or do they?',
 			])+' ===]');
 			Game.Load();
-			// Start mod
-			async function runCookieception() {
-			    // Wait for Game.registerMod to load
-			    let tries = 0
-			    let maxTries = 0
-			    while(!Game.registerMod) {
-				if (tries <= maxTries) {
-				    await new Promise(r => setTimeout(r, 100))
-				    tries++
-				} else {
-				    console.error('Cookieception couldn\'t load properly!')
-				    return
-				}
-			    }
-
-			    // Register mod
-			    Game.registerMod('cookieception', {
-				init: function() {
-				    // Style
-				    let styleSheet = `
-					.cookieceptionWrapper {
-					    height: 780px;
-					}
-					.cookieception {
-					    width: 142.857143%;
-					    height: 1600px;
-					    overflow: auto;
-					    zoom: 0.7; // Old IE only
-					    -moz-transform: scale(0.7);
-					    -webkit-transform: scale(0.7);
-					    transform: scale(0.7);
-					    transform-origin: top left;
-					}
-				    `
-				    let s = document.createElement('style')
-				    s.type = 'text/css'
-				    s.innerHTML = styleSheet;
-				    (document.head || document.documentElement).appendChild(s)
-
-				    // Add minigame
-				    function addCookieceptionMinigame() {
-					let fractalEngine = Game.Objects['Fractal engine']
-					if (!fractalEngine.minigame) {
-					    fractalEngine.minigameName = 'Cookieception'
-					    fractalEngine.minigameUrl = 'https://worldwidewaves.github.io/cookieclicker/dummyFile.js'
-
-					    fractalEngine.minigame = {}
-					    fractalEngine.minigame.name = 'Cookieception'
-					    fractalEngine.minigame.launch = function(){
-						let cookieceptionWrapper = document.createElement('div')
-						cookieceptionWrapper.className = 'cookieceptionWrapper'
-
-						let cookieception = document.createElement('object')
-						cookieception.id = 'cookieception'
-						cookieception.type = 'text/html'
-						cookieception.className = 'cookieception'
-						cookieception.data = 'https://worldwidewaves.github.io/cookieclicker/' //Orteil prevents accessing Cookie Clicker from within other websites 'https://orteil.dashnet.org/cookieclicker/'
-						cookieception.style.display = 'none'
-
-						////////////////////////////////// Move this to where all mods will be already loaded
-						// Add mods to next recursion
-						Object.entries(Game.mods).forEach(([mod, modData]) => {
-						    console.log(mod + ' ' + modData)
-						    console.log(cookieception.Game)
-						});
-
-						cookieceptionWrapper.append(cookieception)
-						document.getElementById('rowSpecial15').append(cookieceptionWrapper)
-					    }
-					    fractalEngine.minigame.save = function(){}
-					    fractalEngine.minigame.load = function(){}
-					    fractalEngine.minigame.reset = function(){}
-					    fractalEngine.minigame.savePrefix = 'minigameCookieception';
-					    fractalEngine.minigame.sourceFolder = 'https://klattmose.github.io/CookieClicker/' + (0 ? 'Beta/' : '');
-					    fractalEngine.minigame.iconsImage = fractalEngine.minigame.sourceFolder + 'img/customIcons.png';
-					    fractalEngine.minigame.beatLength = 750;
-					    Game.LoadMinigames()
-					}
-				    }
-				    addCookieceptionMinigame()
-
-				    // Change minigame button
-				    function changeMinigameButton() {
-					let fractalEngine = Game.Objects['Fractal engine']
-					let button = document.getElementById('productMinigameButton15')
-					fractalEngine.onMinigame ? button.innerText = 'Close Cookieception' : button.innerText = 'View Cookieception'
-					button.style.display = 'block'
-					button.onclick = function(){
-					    fractalEngine.switchMinigame(-1)
-					    let cookieception = document.getElementById('cookieception')
-					    if (fractalEngine.onMinigame) {
-						PlaySound('snd/clickOn.mp3')
-						button.innerText = 'Close Cookieception'
-						cookieception.style.display = 'block'
-					    } else {
-						PlaySound('snd/clickOff.mp3')
-						button.innerText = 'View Cookieception'
-						cookieception.style.display = 'none'
-					    }
-					}
-				    }
-				    changeMinigameButton()
-
-				    // Check for changes to the button
-				    let fractalEngineMutated = async function(mutationsList) {
-					fractalEngineObserver.disconnect()
-
-					changeMinigameButton()
-
-					fractalEngineObserver.observe(document.getElementById('productMinigameButton15'), { attributes: true, childList: true })
-				    }
-				    let fractalEngineObserver = new MutationObserver(fractalEngineMutated)
-				    fractalEngineObserver.observe(document.getElementById('productMinigameButton15'), { attributes: true, childList: true })
-
-				    // Notify mod loaded
-				    Game.Notify('Cookieception loaded!', 'Cookies within Cookies within Cookies within Cookies within Cookies within Cookies within Cookies within Cookies within Cookies within Cookies within Cookies within Cookies within Cookies within Cookies...', [33, 0], 6)
-				}
-			    })
-			}
-
-			// Wait for page to load before starting mod
-			(function() {
-			    'use strict';
-
-			    if (document.readyState === 'complete') {
-				runCookieception()
+			
+			window.addEventListener('message', event => {
+		   	 // IMPORTANT: check the origin of the data! 
+		 	   if (event.origin.startsWith('http://orteil.dashnet.org/cookieclicker/') || event.origin.startsWith('https://orteil.dashnet.org/cookieclicker/')) { 
+				// The data was sent from your site.
+				// Data sent with postMessage is stored in event.data:
+				console.log(event.data); 
 			    } else {
-				window.addEventListener("load", runCookieception)
-			    }
-			})()
+				// The data was NOT sent from your site! 
+				// Be careful! Do not use it. This else branch is
+				// here just for clarity, you usually shouldn't need it.
+				return; 
+			    } 
+			}); 
 			//try {Game.Load();}
 			//catch(err) {console.log('ERROR : '+err.message);}
 		}
