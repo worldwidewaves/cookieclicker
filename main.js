@@ -14483,7 +14483,7 @@ window.onload=function()
 				'Hey, Orteil here. Cheated cookies taste awful... or do they?',
 			])+' ===]');
 			
-			//Game.Load();
+			Game.Load();
 			
 			
 			//try {Game.Load();}
