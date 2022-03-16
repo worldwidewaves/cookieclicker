@@ -14483,21 +14483,7 @@ window.onload=function()
 				'Hey, Orteil here. Cheated cookies taste awful... or do they?',
 			])+' ===]');
 			
-			window.addEventListener('message', event => {
-		   	// IMPORTANT: check the origin of the data! 
-			console.log(event); 
-		 	   if (event.origin.startsWith('http://orteil.dashnet.org/cookieclicker/') || event.origin.startsWith('https://orteil.dashnet.org/cookieclicker/')) { 
-				// The data was sent from your site.
-				// Data sent with postMessage is stored in event.data:
-				console.log(event.data); 
-			    } else {
-				// The data was NOT sent from your site! 
-				// Be careful! Do not use it. This else branch is
-				// here just for clarity, you usually shouldn't need it.
-				return; 
-			    } 
-			}); 
-			Game.Load();
+			//Game.Load();
 			
 			
 			//try {Game.Load();}
