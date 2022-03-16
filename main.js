@@ -1173,7 +1173,7 @@ Game.Launch=function()
 	Game.ErrorFrame=function()
 	{
 		l('javascriptError').innerHTML=
-		'<div class="title">Go play Cookie Clicker from the origial website!</div>'+
+		'<div class="title">Go play Cookie Clicker from the original website!</div>'+
 		'<div>We at SuiCorp don\'t endorse freeloading >:(<br>'+
 		'You can <a href="//orteil.dashnet.org/cookieclicker/" target="_blank">play Cookie Clicker over here</a>!<br>'+
 		'<small>(Go <a href="https://www.patreon.com/dashnet/" target="_blank">support Orteil</a> too!)</small></div>';
