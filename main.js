@@ -1173,10 +1173,10 @@ Game.Launch=function()
 	Game.ErrorFrame=function()
 	{
 		l('javascriptError').innerHTML=
-		'<div class="title">Oops. Wrong address!</div>'+
-		'<div>It looks like you\'re accessing Cookie Clicker from another URL than the official one.<br>'+
+		'<div class="title">Go play Cookie Clicker from the origial website!</div>'+
+		'<div>We at SuiCorp don\'t endorse freeloading >:(<br>'+
 		'You can <a href="//orteil.dashnet.org/cookieclicker/" target="_blank">play Cookie Clicker over here</a>!<br>'+
-		'<small>(If for any reason, you are unable to access the game on the official URL, we are currently working on a second domain.)</small></div>';
+		'<small>(Go <a href="https://www.patreon.com/dashnet/" target="_blank">support Orteil</a> too!)</small></div>';
 	}
 	Game.timedout=false;
 	Game.Timeout=function()
@@ -14471,8 +14471,7 @@ window.onload=function()
 	
 	if (!Game.ready)
 	{
-		//if (top!=self) Game.ErrorFrame();
-		if (false) {}
+		if (top==self) Game.ErrorFrame();
 		else
 		{
 			console.log('[=== '+choose([
