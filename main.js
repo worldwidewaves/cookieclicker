@@ -1915,6 +1915,7 @@ Game.Launch=function()
 			else if (location.protocol=='http:') location.href='https:'+window.location.href.substring(window.location.protocol.length);
 		});
 		
+		/*
 		Game.attachTooltip(l('topbarOrteil'),'<div style="padding:8px;width:250px;text-align:center;">Back to Orteil\'s subdomain!<br>Lots of other games in there!</div>','this');
 		Game.attachTooltip(l('topbarDashnet'),'<div style="padding:8px;width:250px;text-align:center;">Back to our homepage!</div>','this');
 		Game.attachTooltip(l('topbarTwitter'),'<div style="padding:8px;width:250px;text-align:center;">Orteil\'s twitter, which frequently features game updates.</div>','this');
@@ -1951,7 +1952,7 @@ Game.Launch=function()
 		},'this');
 		l('heraldsAmount').textContent='?';
 		l('heralds').style.display='inline-block';
-
+		*/
 		Game.GrabData();
 		
 		
