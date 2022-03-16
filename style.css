@@ -391,6 +391,7 @@ oh forget it this is just a mess
 	height:32px;
 	background:url(img/darkNoiseTopBar.jpg) repeat-x bottom;
 	color:#ccc;
+	display: none;
 }
 #topBar>div
 {
