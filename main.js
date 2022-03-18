@@ -13164,7 +13164,7 @@ Game.Launch=function()
 									var spin=Game.T*(0.005+i*0.001)+i+(ii/num)*Math.PI*2;
 									x+=Math.sin(spin)*space;
 									y+=Math.cos(spin)*space;
-									ctx.drawImage(Pic('perfectCookie.png'),x-s/2,y-s/2,s,s);
+									ctx.drawImage(Pic('bigCookies/1.png'),x-s/2,y-s/2,s,s);
 								}
 								space+=s/2;
 							}
@@ -13184,7 +13184,7 @@ Game.Launch=function()
 								ctx.drawImage(Pic('nest.png'),-nestW/2,-nestH/2+130,nestW,nestH);
 							}
 							//ctx.rotate(((Game.startDate%360)/360)*Math.PI*2);
-							ctx.drawImage(Pic('perfectCookie.png'),-s/2,-s/2,s,s);
+							ctx.drawImage(Pic('bigCookies/1.png'),-s/2,-s/2,s,s);
 							
 							if (goodBuff && Game.prefs.particles)//sparkle
 							{
@@ -13226,7 +13226,7 @@ Game.Launch=function()
 						var s=256*Game.BigCookieSize;
 						var x=Game.cookieOriginX-s/2;
 						var y=Game.cookieOriginY-s/2;
-						ctx.drawImage(Pic('perfectCookie.png'),x,y,s,s);
+						ctx.drawImage(Pic('bigCookies/1.png'),x,y,s,s);
 					}
 					
 					//cursors
@@ -14484,7 +14484,135 @@ window.onload=function()
 			])+' ===]');
 			
 			Game.Load();
-			
+			// ==UserScript==
+// @name         Cookieception
+// @namespace    cookieception
+// @version      "1.0.0"
+// @description  Adds Cookie Clicker to Cookie Clicker
+// @author       Sui
+// @match        https://orteil.dashnet.org/cookieclicker/
+// @match        http://orteil.dashnet.org/cookieclicker/
+// @homepageURL
+// @supportURL
+// @updateURL
+// @icon
+// @license      MIT
+// @grant        none
+// ==/UserScript==
+
+// Run
+(async function() {
+    'use strict'
+
+    // Wait for game to load
+    let tries = 0
+    let maxTries = 1000
+    while(!(window.Game && Game.ready)) {
+        if (tries < maxTries) {
+            await new Promise(r => setTimeout(r, 100))
+            tries++
+        } else {
+            console.error('Cookieception couldn\'t load properly!')
+            return
+        }
+    }
+
+    // Register mod
+    Game.registerMod('Cookieception', {
+        init: function() {
+            // Persistant variables
+            let isMinigameActive = localStorage['isMinigameActive'] == 'true'
+
+            // Style
+            let styleSheet = `
+                .cookieceptionWrapper {
+                    --cookiceptionScale: 0.60;
+                    --cookiceptionHeight: 2300px;
+                    height: calc(var(--cookiceptionHeight) * var(--cookiceptionScale) * var(--cookiceptionScale));
+                }
+                .cookieception {
+                    width: calc(100% / var(--cookiceptionScale));
+                    height: var(--cookiceptionHeight);
+                    overflow: auto;
+                    zoom: var(--cookiceptionScale); // Old IE only
+                    -moz-transform: scale(var(--cookiceptionScale));
+                    -webkit-transform: scale(var(--cookiceptionScale));
+                    transform: scale(var(--cookiceptionScale));
+                    transform-origin: top left;
+                }
+            `
+            let s = document.createElement('style')
+            s.type = 'text/css'
+            s.innerHTML = styleSheet;
+            (document.head || document.documentElement).appendChild(s)
+
+            // Add minigame
+            function addCookieceptionMinigame() {
+                let cookieceptionWrapper = document.createElement('div')
+                cookieceptionWrapper.className = 'cookieceptionWrapper'
+
+                let cookieception = document.createElement('object')
+                cookieception.id = 'cookieception'
+                cookieception.className = 'cookieception'
+                cookieception.style.display = (isMinigameActive ? 'block' : 'none')
+                cookieception.data = 'index2.html'
+
+                ////////////////////////////////// Move this to where all mods will be already loaded
+                // Add mods to next recursion
+                /*
+                Object.entries(Game.mods).forEach(([mod, modData]) => {
+                    console.log(mod + ' ' + modData)
+                })
+                */
+
+                cookieceptionWrapper.append(cookieception)
+                document.getElementById('rowSpecial15').append(cookieceptionWrapper)
+            }
+            addCookieceptionMinigame()
+
+            // Change minigame button
+            let minigameButton = document.getElementById('productMinigameButton15')
+            let fractalRow = document.getElementById('row15')
+            function changeMinigameButton() {
+                isMinigameActive ? fractalRow.className = 'row enabled onMinigame' : fractalRow.className = 'row enabled'
+                isMinigameActive ? minigameButton.innerText = 'Close Cookieception' : minigameButton.innerText = 'View Cookieception'
+                minigameButton.style.display = 'block'
+
+                minigameButton.onclick = function(){
+                    let cookieception = document.getElementById('cookieception')
+                    if (!isMinigameActive) {
+                        PlaySound('snd/clickOn.mp3')
+                        minigameButton.innerText = 'Close Cookieception'
+                        cookieception.style.display = 'block'
+                        fractalRow.className = 'row enabled onMinigame'
+                    } else {
+                        PlaySound('snd/clickOff.mp3')
+                        minigameButton.innerText = 'View Cookieception'
+                        cookieception.style.display = 'none'
+                        fractalRow.className = 'row enabled'
+                    }
+                    isMinigameActive = !isMinigameActive
+                    localStorage['isMinigameActive'] = isMinigameActive
+                }
+            }
+            changeMinigameButton()
+
+            // Check for changes to the button
+            function fractalEngineMutated(mutationsList) {
+                fractalEngineObserver.disconnect()
+
+                changeMinigameButton()
+
+                fractalEngineObserver.observe(minigameButton, { attributes: true, childList: true })
+            }
+            let fractalEngineObserver = new MutationObserver(fractalEngineMutated)
+            fractalEngineObserver.observe(minigameButton, { attributes: true, childList: true })
+
+            // Notify mod loaded
+            Game.Notify('Cookieception loaded!', 'Cookies within Cookies within Cookies within Cookies within Cookies within Cookies within Cookies within Cookies within Cookies within Cookies within Cookies within Cookies within Cookies within Cookies...', [28, 12], 6)
+        }
+    })
+})()
 			
 			//try {Game.Load();}
 			//catch(err) {console.log('ERROR : '+err.message);}
