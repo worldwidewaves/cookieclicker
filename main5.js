@@ -14521,7 +14521,7 @@ window.onload=function()
     Game.registerMod('Cookieception', {
         init: function() {
             // Persistant variables
-            let isMinigameActive = localStorage['isMinigameActive'] == 'true'
+            let isMinigameActive = false // localStorage['isMinigameActive'] == 'true'
 
             // Style
             let styleSheet = `
